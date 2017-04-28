@@ -1,0 +1,231 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "databaseAccounts_smartgallerydocdb_accountname": {
+      "defaultValue": "wawcycledocdb",
+      "type": "string",
+      "metadata": {
+        "description": "DocumentDB account name"
+      }
+    },
+    "databaseAccounts_smartgallerydocdb_dbname": {
+      "defaultValue": "smartgallerydb",
+      "type": "string",
+      "metadata": {
+        "description": "DocumentDB database name"
+      }
+    },
+    "storageAccounts_smartgallerystorage_name": {
+      "defaultValue": "wawcodestorage",
+      "type": "string",
+      "metadata": {
+        "description": "Storage account name"
+      }
+    },
+    "storageAccounts_smartgallerystorage_photocontainer": {
+      "defaultValue": "photos",
+      "type": "string",
+      "metadata": {
+        "description": "Storage account name"
+      }
+    },
+    "storageAccounts_smartgallerystorage_thumbnailcontainer": {
+      "defaultValue": "thumbnails",
+      "type": "string",
+      "metadata": {
+        "description": "Storage account name"
+      }
+    },
+    "storageAccounts_smartgallerystorage_accountType": {
+      "type": "string",
+      "defaultValue": "Standard_RAGRS",
+      "allowedValues": [
+        "Standard_LRS",
+        "Standard_GRS",
+        "Standard_ZRS",
+        "Premium_LRS",
+        "Standard_RAGRS"
+      ],
+      "metadata": {
+        "description": "Storage Account type"
+      }
+    },
+
+    "serverfarms_SmartGalleryASP_name": {
+      "defaultValue": "SmartGalleryASP",
+      "type": "string",
+      "metadata": {
+        "description": "App service plan name"
+      }
+    },
+    "serverfarms_SmartGalleryASP_skuName": {
+      "type": "string",
+      "defaultValue": "B1",
+      "allowedValues": [
+        "B1",
+        "B2",
+        "B3",
+        "S1",
+        "S2",
+        "S3",
+        "P1",
+        "P2",
+        "P3",
+        "P4"
+      ],
+      "metadata": {
+        "description": "Describes plan's pricing tier and instance size. Check details at https://azure.microsoft.com/en-us/pricing/details/app-service/"
+      }
+    },
+    "serverfarms_SmartGalleryASP_skuCapacity": {
+      "type": "int",
+      "defaultValue": 1,
+      "minValue": 1,
+      "metadata": {
+        "description": "Describes plan's instance count"
+      }
+    },
+
+    "sites_smartgallerydemo_name": {
+      "defaultValue": "smartgallerydemo",
+      "type": "string"
+    },
+
+    "accounts_computervision_key": {
+      "defaultValue": "smartgallerydemo",
+      "type": "string"
+    },
+    "accounts_computervision_rootUrl": {
+      "defaultValue": "https://westeurope.api.cognitive.microsoft.com/vision/v1.0",
+      "type": "string"
+    },
+
+    "b2c_tenant": {
+      "defaultValue": "organizacjatest.onmicrosoft.com",
+      "type": "string"
+    },
+    "b2c_clientid": {
+      "defaultValue": "93cc87c3-76b2-4a91-8601-e6e9609a62f4",
+      "type": "string"
+    },
+    "b2c_aadinstance": {
+      "defaultValue": "https://login.microsoftonline.com/{0}/v2.0/.well-known/openid-configuration?p={1}",
+      "type": "string"
+    },
+    "b2c_signupsigninpolicyid": {
+      "defaultValue": "B2C_1_B2C_SignUp_SignIn_Policy1",
+      "type": "string"
+    },
+    "b2c_redirecturi": {
+      "defaultValue": "https://smtgallerytst3.azurewebsites.net/",
+      "type": "string"
+    }
+  },
+  "variables": {
+    
+  },
+  "resources": [
+    {
+      "type": "Microsoft.DocumentDB/databaseAccounts",
+      "kind": "GlobalDocumentDB",
+      "name": "[parameters('databaseAccounts_smartgallerydocdb_accountname')]",
+      "apiVersion": "2015-04-08",
+      "location": "[resourceGroup().location]",
+      "tags": {},
+      "properties": {
+        "databaseAccountOfferType": "Standard",
+        "consistencyPolicy": {
+          "defaultConsistencyLevel": "Session",
+          "maxIntervalInSeconds": 5,
+          "maxStalenessPrefix": 100
+        },
+        "name": "[parameters('databaseAccounts_smartgallerydocdb_accountname')]"
+      },
+      "dependsOn": []
+    },
+    {
+      "type": "Microsoft.Storage/storageAccounts",
+      "sku": {
+        "name": "[parameters('storageAccounts_smartgallerystorage_accountType')]",
+        "tier": "Standard"
+      },
+      "kind": "Storage",
+      "name": "[parameters('storageAccounts_smartgallerystorage_name')]",
+      "apiVersion": "2016-01-01",
+      "location": "[resourceGroup().location]",
+      "tags": {},
+      "properties": {},
+      "dependsOn": [
+        "[resourceId('Microsoft.DocumentDB/databaseAccounts', parameters('databaseAccounts_smartgallerydocdb_accountname'))]"
+      ]
+    },
+    {
+      "type": "Microsoft.Web/serverfarms",
+      "apiVersion": "2016-09-01",
+      "kind": "app",
+      "name": "[parameters('serverfarms_SmartGalleryASP_name')]",
+      "location": "[resourceGroup().location]",
+      "sku": {
+        "name": "[parameters('serverfarms_SmartGalleryASP_skuName')]",
+        "capacity": "[parameters('serverfarms_SmartGalleryASP_skuCapacity')]"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_smartgallerystorage_name'))]"
+      ]
+    },
+    {
+      "type": "Microsoft.Web/sites",
+      "kind": "app",
+      "name": "[parameters('sites_smartgallerydemo_name')]",
+      "apiVersion": "2016-08-01",
+      "location": "[resourceGroup().location]",
+      "tags": {
+        "[concat('hidden-related:', resourceId('Microsoft.Web/serverfarms', parameters('serverfarms_SmartGalleryASP_name')))]": "Resource",
+        "displayName": "[parameters('sites_smartgallerydemo_name')]"
+      },
+      "properties": {
+        "name": "[parameters('sites_smartgallerydemo_name')]",
+        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('serverfarms_SmartGalleryASP_name'))]",
+        "siteConfig": {
+          "properties": {
+            "netFrameworkVersion": "v4.6",
+            "use32BitWorkerProcess": false,
+            "alwaysOn": true
+          }
+        }
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/serverfarms', parameters('serverfarms_SmartGalleryASP_name'))]"
+      ],
+      "resources": [
+        {
+          "name": "appsettings",
+          "type": "config",
+          "apiVersion": "2015-08-01",
+          "dependsOn": [
+            "[resourceId('Microsoft.Web/sites', parameters('sites_smartgallerydemo_name'))]"
+          ],
+          "tags": {
+            "displayName": "sites_smartgallerydemo_config"
+          },
+          "properties": {
+            "storage:connectionstring": "[Concat('DefaultEndpointsProtocol=https;AccountName=',parameters('storageAccounts_smartgallerystorage_name'),';AccountKey=',listKeys(resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_smartgallerystorage_name')), providers('Microsoft.Storage', 'storageAccounts').apiVersions[0]).keys[0].value)]",
+            "storage:photocontainer": "[parameters('storageAccounts_smartgallerystorage_photocontainer')]",
+            "storage:thumbnailcontainer": "[parameters('storageAccounts_smartgallerystorage_thumbnailcontainer')]",
+            "vision:key": "[parameters('accounts_computervision_key')]",
+            "b2c:Tenant": "[parameters('b2c_tenant')]",
+            "b2c:ClientId": "[parameters('b2c_clientid')]",
+            "b2c:AadInstance": "[parameters('b2c_aadinstance')]",
+            "b2c:SignUpSignInPolicyId": "[parameters('b2c_signupsigninpolicyid')]",
+            "b2c:RedirectUri": "[parameters('b2c_redirecturi')]",
+            "vision:rootUrl": "[parameters('accounts_computervision_rootUrl')]",
+            "documentdb:host": "[reference(concat('Microsoft.DocumentDb/databaseAccounts/', parameters('databaseAccounts_smartgallerydocdb_accountname'))).documentEndpoint]",
+            "documentdb:key": "[listKeys(resourceId('Microsoft.DocumentDb/databaseAccounts', parameters('databaseAccounts_smartgallerydocdb_accountname')), '2015-04-08').primaryMasterKey]",
+            "documentdb:dbname": "[parameters('databaseAccounts_smartgallerydocdb_dbname')]"
+          }
+        }
+      ]
+    }
+  ]
+}

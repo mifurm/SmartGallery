@@ -1,0 +1,30 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "storageAccounts_smartgallerystorage_name": {
+      "value": "wawcodestorage"
+    },
+    "storageAccounts_smartgallerystorage_accountType": {
+      "value": "Standard_RAGRS"
+    },
+    "serverfarms_SmartGalleryASP_name": {
+      "value": "SmartGalleryASP"
+    },
+    "sites_smartgallerydemo_name": {
+      "value": "smartgallerydemo"
+    },
+    "serverfarms_SmartGalleryASP_skuName": {
+      "value": "S1"
+    },
+    "accounts_computervision_key": {
+      "value": "42198bba606b4cbe93beb6ea9801be6f"
+    },
+    "databaseAccounts_smartgallerydocdb_accountname": {
+      "value": "wawcycledocdb"
+    },
+    "b2c_redirecturi": {
+      "value": "https://smartgallerydemo.azurewebsites.net/"
+    }
+  }
+}

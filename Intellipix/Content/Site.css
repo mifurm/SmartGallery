@@ -1,0 +1,260 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+html, body {
+    background-image: url("/content/background.jpeg");
+    background-position: center;
+    background-size: cover;
+    height: 100%;
+}
+
+.container .row .col-md-6 {
+    /*height: 100vh;
+    overflow: auto;*/
+}
+
+.container-cover {
+    background-color: rgba(255, 255, 255, 0.85);
+    min-height: 100%;
+}
+
+.about-block {
+    background-color: rgba(27, 38, 112, 1);
+    min-height: 300px;
+    padding: 20px;
+    margin: 4%;
+}
+
+.primary-text {
+    color: #dc2664;
+}
+
+.secondary-text {
+    color: #ffffff;
+}
+
+.caption-style-4 {
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+}
+
+    .caption-style-4 li {
+        float: left;
+        padding: 0px;
+        position: relative;
+        overflow: hidden;
+    }
+
+        .caption-style-4 li:hover .caption {
+            opacity: 1;
+        }
+
+        .caption-style-4 li:hover img {
+            opacity: 1;
+            transform: scale(1.15,1.15);
+            -webkit-transform: scale(1.15,1.15);
+            -moz-transform: scale(1.15,1.15);
+            -ms-transform: scale(1.15,1.15);
+            -o-transform: scale(1.15,1.15);
+        }
+
+
+    .caption-style-4 img {
+        margin: 0px;
+        padding: 0px;
+        float: left;
+        z-index: 4;
+    }
+
+
+    .caption-style-4 .caption {
+        cursor: pointer;
+        position: absolute;
+        opacity: 0;
+        -webkit-transition: all 0.45s ease-in-out;
+        -moz-transition: all 0.45s ease-in-out;
+        -o-transition: all 0.45s ease-in-out;
+        -ms-transition: all 0.45s ease-in-out;
+        transition: all 0.45s ease-in-out;
+    }
+
+    .caption-style-4 img {
+        -webkit-transition: all 0.25s ease-in-out;
+        -moz-transition: all 0.25s ease-in-out;
+        -o-transition: all 0.25s ease-in-out;
+        -ms-transition: all 0.25s ease-in-out;
+        transition: all 0.25s ease-in-out;
+    }
+
+    .caption-style-4 .blur {
+        background-color: rgba(0,0,0,0.65);
+        height: 300px;
+        width: 400px;
+        z-index: 5;
+        position: absolute;
+    }
+
+    .caption-style-4 .caption-text h1 {
+        text-transform: uppercase;
+        font-size: 24px;
+    }
+
+    .caption-style-4 .caption-text {
+        z-index: 10;
+        color: #fff;
+        position: absolute;
+        width: 400px;
+        height: 300px;
+        text-align: center;
+        top: 100px;
+    }
+
+
+.btn-primary, .btn-primary:hover {
+    background-color: #dc2664;
+    border-radius: 15px;
+    border-color: #dc2664;
+}
+
+.form-control {
+    border-color: #dc2664;
+    border-radius: 15px;
+    border-color: #dc2664;
+}
+
+a:hover {
+    color: #dc2664
+}
+
+.navbar-default {
+    background-color: #1b2670;
+    border-color: #dc2664;
+}
+
+    .navbar-default .navbar-brand {
+        color: #ffffff;
+    }
+
+        .navbar-default .navbar-brand:hover,
+        .navbar-default .navbar-brand:focus {
+            color: #dc2664;
+        }
+
+    .navbar-default .navbar-text {
+        color: #ffffff;
+    }
+
+    .navbar-default .navbar-nav > li > a {
+        color: #ffffff;
+    }
+
+        .navbar-default .navbar-nav > li > a:hover,
+        .navbar-default .navbar-nav > li > a:focus {
+            color: #dc2664;
+        }
+
+    .navbar-default .navbar-nav > li > .dropdown-menu {
+        background-color: #1b2670;
+    }
+
+        .navbar-default .navbar-nav > li > .dropdown-menu > li > a {
+            color: #ffffff;
+        }
+
+            .navbar-default .navbar-nav > li > .dropdown-menu > li > a:hover,
+            .navbar-default .navbar-nav > li > .dropdown-menu > li > a:focus {
+                color: #ffffff;
+                background-color: #dc2664;
+            }
+
+        .navbar-default .navbar-nav > li > .dropdown-menu > li > .divider {
+            background-color: #dc2664;
+        }
+
+    .navbar-default .navbar-nav .open .dropdown-menu > .active > a,
+    .navbar-default .navbar-nav .open .dropdown-menu > .active > a:hover,
+    .navbar-default .navbar-nav .open .dropdown-menu > .active > a:focus {
+        color: #ffffff;
+        background-color: #dc2664;
+    }
+
+    .navbar-default .navbar-nav > .active > a,
+    .navbar-default .navbar-nav > .active > a:hover,
+    .navbar-default .navbar-nav > .active > a:focus {
+        color: #ffffff;
+        background-color: #dc2664;
+    }
+
+    .navbar-default .navbar-nav > .open > a,
+    .navbar-default .navbar-nav > .open > a:hover,
+    .navbar-default .navbar-nav > .open > a:focus {
+        color: #ffffff;
+        background-color: #dc2664;
+    }
+
+    .navbar-default .navbar-toggle {
+        border-color: #dc2664;
+    }
+
+        .navbar-default .navbar-toggle:hover,
+        .navbar-default .navbar-toggle:focus {
+            background-color: #dc2664;
+        }
+
+        .navbar-default .navbar-toggle .icon-bar {
+            background-color: #ffffff;
+        }
+
+    .navbar-default .navbar-collapse,
+    .navbar-default .navbar-form {
+        border-color: #ffffff;
+    }
+
+    .navbar-default .navbar-link {
+        color: #ffffff;
+    }
+
+        .navbar-default .navbar-link:hover {
+            color: #ffffff;
+        }
+
+@media (max-width: 767px) {
+    .navbar-default .navbar-nav .open .dropdown-menu > li > a {
+        color: #ffffff;
+    }
+
+        .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover,
+        .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
+            color: #ffffff;
+        }
+
+    .navbar-default .navbar-nav .open .dropdown-menu > .active > a,
+    .navbar-default .navbar-nav .open .dropdown-menu > .active > a:hover,
+    .navbar-default .navbar-nav .open .dropdown-menu > .active > a:focus {
+        color: #ffffff;
+        background-color: #dc2664;
+    }
+}

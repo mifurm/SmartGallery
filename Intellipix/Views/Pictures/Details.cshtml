@@ -1,0 +1,99 @@
+﻿@using System.Globalization
+@model SmartGallery.Web.ViewModels.PhotoVM
+
+@{
+    ViewBag.Title = Model.Caption;
+}
+<div id="fb-root"></div>
+
+<!-- FB share script -->
+<script>
+    (function (d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.9";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+</script>
+
+<h2></h2>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <a>
+                <a href="@Model.PictureUrl" rel="lightbox" title="@Model.Caption" style="object-fit: contain;">
+                    <img src="@Model.PictureUrl" title="@Model.Caption"
+                         style="margin: 0 auto; object-fit: contain;"
+                         class="img-responsive" />
+                </a>
+
+            </a>
+            @*<img class="img-responsive" src="@Model.PictureUrl" title="@Model.Caption"
+                style="object-fit: contain" />*@
+        </div>
+        <div class="col-md-6">
+            <h2>@Model.Caption</h2>
+            <p>
+                <b>Tags: </b>
+                @foreach (string tag in Model.Tags)
+                {
+                    @Html.ActionLink($"{tag}, ", "Index", "Home", new { id = tag }, null)
+                }
+            </p>
+            <div class="fb-share-button" data-href="@Url.Action("Details", "Pictures", new {name = Model.PictureName})" data-layout="button" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A20157%2FPictures%2F75ebbefa.jpg%2F&amp;src=sdkpreparse">Share</a></div>
+            <h3>Comments:</h3>
+            @if (Request.IsAuthenticated)
+            {
+                using (Html.BeginForm("Comment", "Pictures", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="input-group" style="padding-right: 16px;">
+                        <input type="text" class="form-control" placeholder="Add comment..." name="Message" style="max-width: 1000px">
+                        <span class="input-group-btn">
+                            <button class="btn btn-primary" type="submit">
+                                <i class="glyphicon glyphicon-pencil"></i>
+                            </button>
+                        </span>
+                    </div>
+                }
+            }
+            else
+            {
+                <p>Sign in to comment</p>
+            }
+            
+            @if (Model.Comments?.Any() ?? false)
+            {
+                foreach (var comment in Model.Comments)
+                {
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p>
+                                @if (!string.IsNullOrWhiteSpace(comment.UserId))
+                                {
+                                    <b>@comment.UserId, </b>
+                                }
+                                @if (comment.Created.HasValue)
+                                {
+                                    @comment.Created.Value.ToString(CultureInfo.InvariantCulture)
+                                    <br/>
+                                }
+                                @comment.Message
+                            </p>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script type="text/javascript" language="javascript">
+        if ("@TempData["Message"]" !== "") {
+            alert("@TempData["Message"]");
+        }
+    </script>
+}

@@ -1,0 +1,13 @@
+﻿@if (Request.IsAuthenticated)
+{
+    <li>
+        <a id="profile-link">@User.Identity.Name</a>
+    </li>
+    <li>
+        @Html.ActionLink("Sign out", "SignOut", "Account")
+    </li>
+}
+else
+{
+    <li>@Html.ActionLink("Sign in", "SignIn", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+}
